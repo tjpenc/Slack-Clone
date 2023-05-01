@@ -1,8 +1,8 @@
 {
-  "name": "next-firebase-starter",
+  "name": "slack-clone",
   "private": true,
   "version": "1.0.0",
-  "author": "Trinity Christiana",
+  "author": "Brandon Highland, Cole Amantea, Nathan Clover, Thomas Pencarinha",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
