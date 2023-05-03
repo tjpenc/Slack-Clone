@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { useAuth } from '../utils/context/authContext';
-import User from './User';
 
 function Header() {
   const { user } = useAuth();
   return (
     <HeaderContainer>
       <HeaderLeft>
-        <User userObject={user} />
+        <HeaderAvatar src={user.photoURL} />
       </HeaderLeft>
 
       <HeaderSearch><input placeholder="Search Messages" /></HeaderSearch>
@@ -62,4 +62,23 @@ const HeaderRight = styled.div`
   justify-content: flex-end;
 `;
 
+const HeaderAvatar = styled.img`
+  /* cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 20px; */
+`;
+
 const HeaderStatus = styled.div``;
+
+Header.propTypes = {
+  userObject: PropTypes.shape({
+    displayName: PropTypes.string,
+    email: PropTypes.string,
+    photoURL: PropTypes.string,
+    metadata: PropTypes.shape({
+      lastSignInTime: PropTypes.string,
+    }),
+  }).isRequired,
+};
