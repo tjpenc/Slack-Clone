@@ -4,7 +4,7 @@ import Link from 'next/link';
 import {
   Navbar, Container, Nav, Button,
 } from 'react-bootstrap';
-import { signOut } from '../utils/auth';
+import { signOut, signIn } from '../utils/auth';
 
 export default function NavBarAuth() {
   return (
@@ -21,6 +21,7 @@ export default function NavBarAuth() {
               <Nav.Link>Home</Nav.Link>
             </Link>
             <Button variant="danger" onClick={signOut}>Sign Out</Button>
+            <Button variant="danger" onClick={signIn}>Sign In</Button>
           </Nav>
         </Navbar.Collapse>
       </Container>
