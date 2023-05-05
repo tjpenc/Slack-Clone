@@ -18,4 +18,11 @@ const updateMessage = (messageObj) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-export { createMessage, updateMessage };
+const getMessages = () => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/messages.json`)
+    .then((response) => (response.data))
+    .then((data) => resolve(Object.values(data)))
+    .catch(reject);
+});
+
+export { createMessage, updateMessage, getMessages };

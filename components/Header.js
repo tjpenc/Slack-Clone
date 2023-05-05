@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Button } from 'react-bootstrap';
 import { useAuth } from '../utils/context/authContext';
+import { signOut } from '../utils/auth';
 
 function Header() {
   const { user } = useAuth();
@@ -14,6 +16,7 @@ function Header() {
 
       <HeaderRight>
         <HeaderStatus />
+        <Button variant="danger" onClick={signOut}>Sign Out</Button>
       </HeaderRight>
     </HeaderContainer>
   );
@@ -28,7 +31,7 @@ const HeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 10px 0;
-  background-color: white;
+  background-color: #611f69;
 `;
 
 const HeaderLeft = styled.div`

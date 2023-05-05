@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
+import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
-import { useRouter } from 'next/router';
-import { createMessage } from '../api/messageData';
+// import { useRouter } from 'next/router';
+import { createMessage, getMessages } from '../api/messageData';
 import { useAuth } from '../utils/context/authContext';
 
 const initialState = {
   channelId: '',
   firebaseKey: '',
   image: '',
+  username: '',
   text: '',
   time: '',
   uid: '',
 };
 
-function ChatInput() {
+function ChatInput({ setMessages }) {
   const [input, setInput] = useState(initialState);
-  const router = useRouter();
+  // const router = useRouter();
   const { user } = useAuth();
 
   const handleChange = (e) => {
@@ -36,9 +38,10 @@ function ChatInput() {
       channelId: 'channelId',
       firebaseKey: '',
       image: user.photoURL,
+      username: user.displayName,
     };
     createMessage(payload).then(() => {
-      router.push('/');
+      getMessages().then(setMessages);
     });
     input.text = '';
   };
@@ -63,6 +66,10 @@ function ChatInput() {
 }
 
 export default ChatInput;
+
+ChatInput.propTypes = {
+  setMessages: PropTypes.func.isRequired,
+};
 
 const ChatInputContainer = styled.div`
 border-radius: 20px;

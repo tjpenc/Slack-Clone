@@ -1,35 +1,38 @@
-import { Button } from 'react-bootstrap';
-import { signOut } from '../utils/auth';
-import { useAuth } from '../utils/context/authContext';
+import styled from 'styled-components';
 import Header from '../components/Header';
 import User from '../components/User';
-import ChatInput from '../components/ChatInput';
 import Chat from '../components/Chat';
+import SideBar from '../components/SideBar';
 
 function Home() {
-  const { user } = useAuth();
-
   return (
     <>
-      <Header userObject={User} />
-      <Chat />
-
-      <div
-        className="text-center d-flex flex-column justify-content-center align-content-center"
-        style={{
-          height: '90vh',
-          padding: '30px',
-          maxWidth: '400px',
-          margin: '0 auto',
-        }}
-      >
-
-        <h1>Hello {user.displayName}! </h1>
-        <Button variant="danger" onClick={signOut}>Sign Out</Button>
-        <ChatInput />
-      </div>
+      <HeaderContainer>
+        <Header userObject={User} />
+      </HeaderContainer>
+      <ContentContainer>
+        <SideBar />
+        <Chat />
+      </ContentContainer>
     </>
   );
 }
 
 export default Home;
+
+const HeaderContainer = styled.div`
+display: flex;
+position: fixed;
+top: 20px;
+left: 0;
+width: 100%;
+align-items: center;
+justify-content: space-between;
+padding: 10px 0;
+background-color: white;
+`;
+
+const ContentContainer = styled.div`
+display: flex;
+height: 100vh;
+`;

@@ -1,28 +1,15 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Message from './Message';
-import { useAuth } from '../utils/context/authContext';
-import { clientCredentials } from '../utils/client';
-
-const axios = require('axios');
-
-const url = clientCredentials.databaseURL;
+import ChatInput from './ChatInput';
+import { getMessages } from '../api/messageData';
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
 
-  const getMessages = () => new Promise((resolve, reject) => {
-    axios.get(`${url}/messages.json`)
-      .then((response) => (response.data))
-      .then((data) => resolve(Object.values(data)))
-      .catch(reject);
-  });
-
   useEffect(() => {
     getMessages().then(setMessages);
   }, []);
-
-  const { user } = useAuth();
 
   return (
     <ChatContainer>
@@ -34,7 +21,12 @@ export default function Chat() {
           <p>Details</p>
         </HeaderRight>
       </Header>
-      {messages.map((message) => <Message key={message.firebaseKey} text={message.text} image={user.photoURL} name={user.displayName} time={message.time} />)}
+      <ChatMessages>
+        {messages.map((message) => <Message key={message.firebaseKey} text={message.text} image={message.image} name={message.username} time={message.time} />)}
+      </ChatMessages>
+      <ChatInputContainer>
+        <ChatInput setMessages={setMessages} />
+      </ChatInputContainer>
 
     </ChatContainer>
   );
@@ -69,4 +61,10 @@ const HeaderRight = styled.div`
     align-items: center;
     font-size: 14px;
   }
+`;
+
+const ChatMessages = styled.div``;
+
+const ChatInputContainer = styled.div`
+margin-top: 10px;
 `;
