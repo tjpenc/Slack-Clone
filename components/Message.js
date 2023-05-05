@@ -1,13 +1,13 @@
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
-// import Image from 'next/image';
+import Card from 'react-bootstrap/Card';
 
 export default function Message({
   text, image, name, time,
 }) {
   return (
     <MessageContainer>
-      {/* <Image src={image} alt="">Image</Image> */}{image}
+      <Card.Img variant="top" src={image} alt="image" style={{ height: '50px', width: '50px' }} />
       <MessageInfo>
         <h4>
           {name}<span> {time}</span>

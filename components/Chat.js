@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Message from './Message';
-// import { useAuth } from '../utils/context/authContext';
+import { useAuth } from '../utils/context/authContext';
 import { clientCredentials } from '../utils/client';
 
 const axios = require('axios');
@@ -22,8 +22,7 @@ export default function Chat() {
     getMessages().then(setMessages);
   }, []);
 
-  // const { user } = useAuth();
-  // console.warn(user);
+  const { user } = useAuth();
 
   return (
     <ChatContainer>
@@ -35,7 +34,7 @@ export default function Chat() {
           <p>Details</p>
         </HeaderRight>
       </Header>
-      {messages.map((message) => <Message key={message.firebaseKey} text={message.text} image={message.photoURL} name={message.displayName} time={message.time} />)}
+      {messages.map((message) => <Message key={message.firebaseKey} text={message.text} image={user.photoURL} name={user.displayName} time={message.time} />)}
 
     </ChatContainer>
   );

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { useAuth } from '../utils/context/authContext';
 
 function Header() {
@@ -71,14 +70,3 @@ const HeaderAvatar = styled.img`
 `;
 
 const HeaderStatus = styled.div``;
-
-Header.propTypes = {
-  userObject: PropTypes.shape({
-    displayName: PropTypes.string,
-    email: PropTypes.string,
-    photoURL: PropTypes.string,
-    metadata: PropTypes.shape({
-      lastSignInTime: PropTypes.string,
-    }),
-  }).isRequired,
-};

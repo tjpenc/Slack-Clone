@@ -3,7 +3,7 @@ import { signOut } from '../utils/auth';
 import { useAuth } from '../utils/context/authContext';
 import Header from '../components/Header';
 import User from '../components/User';
-// import Chat from '../components/Chat';
+import Chat from '../components/Chat';
 
 function Home() {
   const { user } = useAuth();
@@ -11,6 +11,7 @@ function Home() {
   return (
     <>
       <Header userObject={User} />
+      <Chat />
 
       <div
         className="text-center d-flex flex-column justify-content-center align-content-center"
