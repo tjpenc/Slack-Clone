@@ -62,11 +62,11 @@ const HeaderRight = styled.div`
 `;
 
 const HeaderAvatar = styled.img`
-  /* cursor: pointer;
+  cursor: pointer;
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin-right: 20px; */
+  margin-right: 20px;
 `;
 
 const HeaderStatus = styled.div``;
