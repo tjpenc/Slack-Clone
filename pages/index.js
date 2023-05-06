@@ -1,18 +1,20 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import Header from '../components/Header';
 import User from '../components/User';
 import Chat from '../components/Chat';
 import SideBar from '../components/SideBar';
 
 function Home() {
+  const [searchTerm, setSearchTerm] = useState('');
   return (
     <>
       <HeaderContainer>
-        <Header userObject={User} />
+        <Header setSearchTerm={setSearchTerm} userObject={User} />
       </HeaderContainer>
       <ContentContainer>
         <SideBar />
-        <Chat />
+        <Chat searchTerm={searchTerm} />
       </ContentContainer>
     </>
   );

@@ -1,15 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
+import Proptypes from 'prop-types';
 import Message from './Message';
 import ChatInput from './ChatInput';
 import { getMessages } from '../api/messageData';
 
-export default function Chat() {
+export default function Chat({ searchTerm }) {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     getMessages().then(setMessages);
   }, []);
+
+  const filteredMessages = useMemo(() => messages.filter((message) => {
+    const messageContent = message.text.toLowerCase();
+    return messageContent.includes(searchTerm.toLowerCase());
+  }), [messages, searchTerm]);
 
   return (
     <ChatContainer>
@@ -22,7 +28,15 @@ export default function Chat() {
         </HeaderRight>
       </Header>
       <ChatMessages>
-        {messages.map((message) => <Message key={message.firebaseKey} text={message.text} image={message.image} name={message.username} time={message.time} />)}
+        {filteredMessages.map((message) => (
+          <Message
+            key={message.firebaseKey}
+            text={message.text}
+            image={message.image}
+            name={message.username}
+            time={message.time}
+          />
+        ))}
       </ChatMessages>
       <ChatInputContainer>
         <ChatInput setMessages={setMessages} />
@@ -68,3 +82,11 @@ const ChatMessages = styled.div``;
 const ChatInputContainer = styled.div`
 margin-top: 10px;
 `;
+
+Chat.propTypes = {
+  searchTerm: Proptypes.string,
+};
+
+Chat.defaultProps = {
+  searchTerm: '',
+};
