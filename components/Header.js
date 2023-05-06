@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import { useAuth } from '../utils/context/authContext';
 import { signOut } from '../utils/auth';
 
-function Header() {
+function Header({ setSearchTerm }) {
   const { user } = useAuth();
   return (
     <HeaderContainer>
@@ -12,7 +13,13 @@ function Header() {
         <HeaderAvatar src={user.photoURL} />
       </HeaderLeft>
 
-      <HeaderSearch><input placeholder="Search Messages" /></HeaderSearch>
+      <HeaderSearch>
+        <input
+          type="text"
+          placeholder="Search messages"
+          onChange={(event) => setSearchTerm(event.target.value)}
+        />
+      </HeaderSearch>
 
       <HeaderRight>
         <HeaderStatus />
@@ -73,3 +80,7 @@ const HeaderAvatar = styled.img`
 `;
 
 const HeaderStatus = styled.div``;
+
+Header.propTypes = {
+  setSearchTerm: PropTypes.func.isRequired,
+};
