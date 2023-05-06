@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
@@ -29,6 +29,16 @@ function ChatInput({ setMessages }) {
     }));
   };
 
+  const updateMessages = () => {
+    getMessages().then((messages) => {
+      setMessages(messages);
+    });
+  };
+
+  useEffect(() => {
+    updateMessages();
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const payload = {
@@ -40,10 +50,11 @@ function ChatInput({ setMessages }) {
       image: user.photoURL,
       username: user.displayName,
     };
-    createMessage(payload).then(() => {
-      getMessages().then(setMessages);
-    });
-    input.text = '';
+    createMessage(payload).then(updateMessages);
+    setInput((prevState) => ({
+      ...prevState,
+      text: '',
+    }));
   };
 
   return (
