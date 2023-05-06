@@ -17,8 +17,6 @@ export default function ViewChatroom() {
     getSingleChannel(firebaseKey).then(setChannel);
   }, [firebaseKey]);
 
-  console.warn(channel);
-
   return (
     <>
       <HeaderContainer>

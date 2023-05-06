@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import Proptypes from 'prop-types';
 import Message from './Message';
 import ChatInput from './ChatInput';
-import { getMessages } from '../api/messageData';
+import getMessagesByChannel from '../api/mergedData';
 
-export default function Chat({ searchTerm }) {
+export default function Chat({ searchTerm, channelData }) {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    getMessages().then(setMessages);
-  }, []);
+    getMessagesByChannel(channelData.firebaseKey).then(setMessages);
+  }, [channelData.firebaseKey]);
 
   const filteredMessages = useMemo(() => messages.filter((message) => {
     const messageContent = message.text.toLowerCase();
@@ -21,7 +21,7 @@ export default function Chat({ searchTerm }) {
     <ChatContainer>
       <Header>
         <HeaderLeft>
-          <h4>#Channel Name</h4>
+          <h4># {channelData.name}</h4>
         </HeaderLeft>
         <HeaderRight>
           <p>Details</p>
@@ -39,7 +39,7 @@ export default function Chat({ searchTerm }) {
         ))}
       </ChatMessages>
       <ChatInputContainer>
-        <ChatInput setMessages={setMessages} />
+        <ChatInput setMessages={setMessages} channelData={channelData} />
       </ChatInputContainer>
 
     </ChatContainer>
@@ -85,8 +85,18 @@ margin-top: 10px;
 
 Chat.propTypes = {
   searchTerm: Proptypes.string,
+  channelData: Proptypes.shape({
+    firebaseKey: Proptypes.string,
+    name: Proptypes.string,
+    uid: Proptypes.string,
+  }),
 };
 
 Chat.defaultProps = {
   searchTerm: '',
+  channelData: {
+    firebaseKey: 'firebaseKey',
+    name: 'channel name',
+    uid: 'UID',
+  },
 };
