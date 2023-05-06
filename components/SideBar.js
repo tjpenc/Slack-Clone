@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CreateIcon from '@material-ui/icons/Create';
 import InsertCommentIcon from '@material-ui/icons/InsertComment';
@@ -14,12 +14,19 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import AddIcon from '@material-ui/icons/Add';
 import SideBarOption from './SideBarOption';
+import SideBarChannel from './SideBarChannel';
 import { useAuth } from '../utils/context/authContext';
 // import { clientCredentials } from '../utils/client';
+import { getChannels } from '../api/channelData';
 
 function SideBar() {
-  /* const [channels, loading, error ] = useCollection(clientCredentials.collection('rooms')); */
+  const [channels, setChannels] = useState([]);
   const { user } = useAuth();
+
+  useEffect(() => {
+    getChannels().then(setChannels);
+  }, []);
+
   return (
     <SideBarContainer>
       <SideBarHeader>
@@ -46,9 +53,9 @@ function SideBar() {
       <hr />
       <SideBarOption Icon={AddIcon} addChannelOption title="Add Channel" />
 
-      {/* channels?.docs.map((doc) => (
-        <SideBarOption key={doc.id} title={doc.data().name} />
-      ))} */}
+      {channels?.map((channel) => (
+        <SideBarChannel key={channel.firebaseKey} channelData={channel} />
+      ))}
     </SideBarContainer>
   );
 }
