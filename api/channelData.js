@@ -19,14 +19,14 @@ const updateChannel = (messageObj) => new Promise((resolve, reject) => {
 });
 
 const getChannels = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/messages.json`)
+  axios.get(`${dbUrl}/channels.json`)
     .then((response) => (response.data))
     .then((data) => resolve(Object.values(data)))
     .catch(reject);
 });
 
 const getSingleChannel = (firebaseKey) => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/channels/${firebaseKey}`)
+  axios.get(`${dbUrl}/channels/${firebaseKey}.json`)
     .then((response) => resolve(response.data))
     .catch(reject);
 });

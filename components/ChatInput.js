@@ -3,8 +3,9 @@ import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
 // import { useRouter } from 'next/router';
-import { createMessage, getMessages } from '../api/messageData';
+import { createMessage } from '../api/messageData';
 import { useAuth } from '../utils/context/authContext';
+import getMessagesByChannel from '../api/mergedData';
 
 const initialState = {
   channelId: '',
@@ -16,7 +17,7 @@ const initialState = {
   uid: '',
 };
 
-function ChatInput({ setMessages }) {
+function ChatInput({ setMessages, channelData }) {
   const [input, setInput] = useState(initialState);
   // const router = useRouter();
   const { user } = useAuth();
@@ -30,7 +31,7 @@ function ChatInput({ setMessages }) {
   };
 
   const updateMessages = () => {
-    getMessages().then((messages) => {
+    getMessagesByChannel(channelData.firebaseKey).then((messages) => {
       setMessages(messages);
     });
   };
@@ -45,7 +46,7 @@ function ChatInput({ setMessages }) {
       ...input,
       uid: user.uid,
       time: Date().toString(),
-      channelId: 'channelId',
+      channelId: channelData.firebaseKey,
       firebaseKey: '',
       image: user.photoURL,
       username: user.displayName,
@@ -64,7 +65,7 @@ function ChatInput({ setMessages }) {
           type="text"
           value={input.text}
           onChange={handleChange}
-          placeholder="Message #ROOM"
+          placeholder={`Message # ${channelData.name}`}
           name="text"
           required
         />
@@ -80,6 +81,11 @@ export default ChatInput;
 
 ChatInput.propTypes = {
   setMessages: PropTypes.func.isRequired,
+  channelData: PropTypes.shape({
+    firebaseKey: PropTypes.string,
+    name: PropTypes.string,
+    uid: PropTypes.string,
+  }).isRequired,
 };
 
 const ChatInputContainer = styled.div`
