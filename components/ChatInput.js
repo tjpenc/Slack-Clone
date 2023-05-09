@@ -15,6 +15,7 @@ const initialState = {
   text: '',
   time: '',
   uid: '',
+  likes: 0,
 };
 
 function ChatInput({ setMessages, channelData }) {
