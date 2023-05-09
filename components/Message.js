@@ -1,21 +1,25 @@
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import Card from 'react-bootstrap/Card';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { updateMessageLikes } from '../api/messageData';
 
 export default function Message({
   text, image, name, time, likes, firebaseKey,
 }) {
-  const [like, setLike] = useState(likes);
+  const [likeCount, setLikeCount] = useState(likes);
 
   const handleLike = () => {
     updateMessageLikes({
       firebaseKey,
-      likes: like + 1,
+      likes: likeCount + 1,
     });
-    setLike((prevState) => prevState + 1);
+    setLikeCount((prevState) => prevState + 1);
   };
+
+  useEffect(() => {
+    setLikeCount(likes);
+  }, [likes]);
 
   return (
     <MessageContainer>
@@ -26,7 +30,7 @@ export default function Message({
         </h4>
         <p>{text}</p>
         <button type="button" onClick={handleLike}>Like</button>
-        <p>{likes}</p>
+        <p>{likeCount}</p>
       </MessageInfo>
     </MessageContainer>
   );
