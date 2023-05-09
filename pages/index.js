@@ -2,19 +2,19 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import Header from '../components/Header';
 import User from '../components/User';
-import Chat from '../components/Chat';
 import SideBar from '../components/SideBar';
+import LandingPage from '../components/LandingPage';
 
 function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   return (
     <>
       <HeaderContainer>
-        <Header setSearchTerm={setSearchTerm} userObject={User} />
+        <Header setSearchTerm={setSearchTerm} userObject={User} searchTerm={searchTerm} />
       </HeaderContainer>
       <ContentContainer>
         <SideBar />
-        <Chat searchTerm={searchTerm} />
+        <LandingPage />
       </ContentContainer>
     </>
   );
@@ -36,5 +36,5 @@ background-color: white;
 
 const ContentContainer = styled.div`
 display: flex;
-height: 100vh;
+height: auto;
 `;

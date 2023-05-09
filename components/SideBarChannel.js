@@ -8,7 +8,7 @@ function SideBarChannel({ channelData }) {
     <SideBarChannelContainer>
       <SideBarChannelChannel>
         <Link href={`/channels/${channelData.firebaseKey}`} passHref>
-          <p># {channelData.name}</p>
+          <p><span>#</span> {channelData.name}</p>
         </Link>
       </SideBarChannelChannel>
     </SideBarChannelContainer>
@@ -29,15 +29,18 @@ cursor: pointer;
     background-color: #340e36;
   }
   > h3 {
+    font-size: 20px;
     font-weight: 500;
+    padding-left: 18px;
+    display: flex;
+    justify-content: center;
   }
-  > h3 > span {
+  > p > span {
     padding: 15px;
   }
 `;
 
 const SideBarChannelChannel = styled.h3`
-  padding: 10px 0;
   font-weight: 300;
 
 `;

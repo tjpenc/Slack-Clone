@@ -8,6 +8,7 @@ import User from '../../components/User';
 import { getSingleChannel } from '../../api/channelData';
 
 export default function ViewChatroom() {
+  const [searchTerm, setSearchTerm] = useState('');
   const router = useRouter();
   const { firebaseKey } = router.query;
 
@@ -20,12 +21,12 @@ export default function ViewChatroom() {
   return (
     <>
       <HeaderContainer>
-        <Header userObject={User} />
+        <Header setSearchTerm={setSearchTerm} userObject={User} />
       </HeaderContainer>
       <ContentContainer>
         <SideBar />
         {console.warn(channel)}
-        <Chat key={firebaseKey} channelData={channel} />
+        <Chat key={firebaseKey} channelData={channel} searchTerm={searchTerm} />
       </ContentContainer>
     </>
   );
