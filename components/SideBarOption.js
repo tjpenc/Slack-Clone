@@ -43,15 +43,17 @@ font-size: 12px;
 align-items: center;
 padding-left: 2px;
 cursor: pointer;
-
+flex-grow: 1;
   :hover {
     opacity: 0.9;
     background-color: #340e36;
   }
   > h3 {
+    font-size: 20px;
     font-weight: 500;
   }
   > h3 > span {
+    font-size: 20px;
     padding: 15px;
   }
 `;
