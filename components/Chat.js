@@ -28,7 +28,7 @@ export default function Chat({ searchTerm, channelData }) {
         </HeaderRight>
       </Header>
       <ChatMessages>
-        {filteredMessages.map((message) => (
+        {filteredMessages?.map((message) => (
           <Message
             key={message.firebaseKey}
             text={message.text}

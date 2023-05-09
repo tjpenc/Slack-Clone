@@ -24,6 +24,7 @@ export default function ViewChatroom() {
       </HeaderContainer>
       <ContentContainer>
         <SideBar />
+        {console.warn(channel)}
         <Chat key={firebaseKey} channelData={channel} />
       </ContentContainer>
     </>

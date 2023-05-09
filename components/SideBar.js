@@ -23,8 +23,12 @@ function SideBar() {
   const [channels, setChannels] = useState([]);
   const { user } = useAuth();
 
-  useEffect(() => {
+  const updateChannels = () => {
     getChannels().then(setChannels);
+  };
+
+  useEffect(() => {
+    updateChannels();
   }, []);
 
   return (
@@ -51,7 +55,7 @@ function SideBar() {
       <hr />
       <SideBarOption Icon={ExpandMoreIcon} title="Show More" />
       <hr />
-      <SideBarOption Icon={AddIcon} addChannelOption title="Add Channel" />
+      <SideBarOption Icon={AddIcon} addChannelOption title="Add Channel" updateChannels={updateChannels} />
 
       {channels?.map((channel) => (
         <SideBarChannel key={channel.firebaseKey} channelData={channel} />
