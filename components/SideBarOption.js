@@ -1,19 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import clientCredentials from '../utils/client';
+import { createChannel } from '../api/channelData';
+import { useAuth } from '../utils/context/authContext';
 
 function SideBarOption({
-  Icon, title, addChannelOption,
+  Icon, title, addChannelOption, updateChannels,
 }) {
+  const { user } = useAuth();
+
   const addChannel = () => {
     const channelName = prompt('Please Enter Channel Name');
-
-    if (channelName) {
-      clientCredentials.collection('rooms').add({
-        name: channelName,
-      });
-    }
+    const payload = { name: channelName, uid: user.uid };
+    createChannel(payload).then(updateChannels);
   };
 
   const selectChannel = () => {
@@ -67,4 +66,5 @@ SideBarOption.propTypes = {
   Icon: PropTypes.string,
   title: PropTypes.string,
   addChannelOption: PropTypes.string,
+  updateChannels: PropTypes.func,
 }.isRequired;

@@ -8,7 +8,7 @@ const createChannel = (messageObj) => new Promise((resolve, reject) => {
     .then((response) => {
       const payload = { firebaseKey: response.data.name };
       axios.patch(`${dbUrl}/channels/${response.data.name}.json`, payload)
-        .then(resolve);
+        .then((incoming) => resolve(incoming.data));
     }).catch(reject);
 });
 
