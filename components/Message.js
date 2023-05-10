@@ -15,6 +15,7 @@ export default function Message({
       likes: likeCount + 1,
     });
     setLikeCount((prevState) => prevState + 1);
+    onUpdate();
   };
 
   useEffect(() => {
