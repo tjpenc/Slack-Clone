@@ -1,11 +1,26 @@
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import Card from 'react-bootstrap/Card';
-import { deleteMessage } from '../api/messageData';
+import { useEffect, useState } from 'react';
+import { updateMessageLikes, deleteMessage } from '../api/messageData';
 
 export default function Message({
-  firebaseKey, text, image, name, time, onUpdate,
+  text, image, name, time, likes, firebaseKey, onUpdate,
 }) {
+  const [likeCount, setLikeCount] = useState(likes);
+
+  const handleLike = () => {
+    updateMessageLikes({
+      firebaseKey,
+      likes: likeCount + 1,
+    });
+    setLikeCount((prevState) => prevState + 1);
+  };
+
+  useEffect(() => {
+    setLikeCount(likes);
+  }, [likes]);
+
   const deleteThisMessage = () => {
     deleteMessage(firebaseKey).then(() => onUpdate());
   };
@@ -18,6 +33,8 @@ export default function Message({
           {name}<span> {time}</span>
         </h4>
         <p>{text}</p>
+        <button type="button" onClick={handleLike}>Like</button>
+        <p>{likeCount}</p>
       </MessageInfo>
       <MenuButton>
         <button type="button" onClick={() => deleteThisMessage()}>⋮</button>
@@ -27,20 +44,21 @@ export default function Message({
 }
 
 Message.propTypes = {
-  firebaseKey: PropTypes.string,
   text: PropTypes.string,
   image: PropTypes.string,
   name: PropTypes.string,
   time: PropTypes.string,
   onUpdate: PropTypes.func.isRequired,
+  likes: PropTypes.number,
+  firebaseKey: PropTypes.string.isRequired,
 };
 
 Message.defaultProps = {
-  firebaseKey: '',
   text: 'This is default text',
   image: 'image',
   name: 'name',
   time: 'time',
+  likes: 0,
 };
 
 const MessageContainer = styled.div`

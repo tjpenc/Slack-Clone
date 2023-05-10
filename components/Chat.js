@@ -35,13 +35,13 @@ export default function Chat({ searchTerm, channelData }) {
         {filteredMessages?.map((message) => (
           <Message
             key={message.firebaseKey}
-            firebaseKey={message.firebaseKey}
             text={message.text}
             image={message.image}
             name={message.username}
             time={message.time}
+            likes={message.likes}
+            firebaseKey={message.firebaseKey}
             onUpdate={updateMessages}
-            channelKey={channelData.firebaseKey}
           />
         ))}
       </ChatMessages>
