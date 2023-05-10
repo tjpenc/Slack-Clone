@@ -1,10 +1,26 @@
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import Card from 'react-bootstrap/Card';
+import { useEffect, useState } from 'react';
+import { updateMessageLikes } from '../api/messageData';
 
 export default function Message({
-  text, image, name, time,
+  text, image, name, time, likes, firebaseKey,
 }) {
+  const [likeCount, setLikeCount] = useState(likes);
+
+  const handleLike = () => {
+    updateMessageLikes({
+      firebaseKey,
+      likes: likeCount + 1,
+    });
+    setLikeCount((prevState) => prevState + 1);
+  };
+
+  useEffect(() => {
+    setLikeCount(likes);
+  }, [likes]);
+
   return (
     <MessageContainer>
       <Card.Img variant="top" src={image} alt="image" style={{ height: '50px', width: '50px' }} />
@@ -13,6 +29,8 @@ export default function Message({
           {name}<span> {time}</span>
         </h4>
         <p>{text}</p>
+        <button type="button" onClick={handleLike}>Like</button>
+        <p>{likeCount}</p>
       </MessageInfo>
     </MessageContainer>
   );
@@ -23,6 +41,8 @@ Message.propTypes = {
   image: PropTypes.string,
   name: PropTypes.string,
   time: PropTypes.string,
+  likes: PropTypes.number,
+  firebaseKey: PropTypes.string.isRequired,
 };
 
 Message.defaultProps = {
@@ -30,6 +50,7 @@ Message.defaultProps = {
   image: 'image',
   name: 'name',
   time: 'time',
+  likes: 0,
 };
 
 const MessageContainer = styled.div`

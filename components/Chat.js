@@ -35,6 +35,8 @@ export default function Chat({ searchTerm, channelData }) {
             image={message.image}
             name={message.username}
             time={message.time}
+            likes={message.likes}
+            firebaseKey={message.firebaseKey}
           />
         ))}
       </ChatMessages>
