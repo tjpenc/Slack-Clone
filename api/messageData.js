@@ -25,6 +25,13 @@ const getMessages = (messageObj) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const deleteMessage = (firebaseKey) => new Promise((resolve, reject) => {
+  axios.delete(`${dbUrl}/messages/${firebaseKey}.json`)
+    .then((response) => (response.data))
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
 const updateMessageLikes = (messageObj, likes) => new Promise((resolve, reject) => {
   axios.patch(`${dbUrl}/messages/${messageObj.firebaseKey}.json`, messageObj, likes)
     .then(resolve)
@@ -32,5 +39,5 @@ const updateMessageLikes = (messageObj, likes) => new Promise((resolve, reject) 
 });
 
 export {
-  createMessage, updateMessage, getMessages, updateMessageLikes,
+  createMessage, updateMessage, getMessages, updateMessageLikes, deleteMessage,
 };

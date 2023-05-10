@@ -17,6 +17,10 @@ export default function Chat({ searchTerm, channelData }) {
     return messageContent.includes(searchTerm.toLowerCase());
   }), [messages, searchTerm]);
 
+  const updateMessages = () => {
+    getMessagesByChannel(channelData.firebaseKey).then(setMessages);
+  };
+
   return (
     <ChatContainer>
       <Header>
@@ -37,6 +41,7 @@ export default function Chat({ searchTerm, channelData }) {
             time={message.time}
             likes={message.likes}
             firebaseKey={message.firebaseKey}
+            onUpdate={updateMessages}
           />
         ))}
       </ChatMessages>

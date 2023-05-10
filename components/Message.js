@@ -2,10 +2,10 @@ import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import Card from 'react-bootstrap/Card';
 import { useEffect, useState } from 'react';
-import { updateMessageLikes } from '../api/messageData';
+import { updateMessageLikes, deleteMessage } from '../api/messageData';
 
 export default function Message({
-  text, image, name, time, likes, firebaseKey,
+  text, image, name, time, likes, firebaseKey, onUpdate,
 }) {
   const [likeCount, setLikeCount] = useState(likes);
 
@@ -21,6 +21,10 @@ export default function Message({
     setLikeCount(likes);
   }, [likes]);
 
+  const deleteThisMessage = () => {
+    deleteMessage(firebaseKey).then(() => onUpdate());
+  };
+
   return (
     <MessageContainer>
       <Card.Img variant="top" src={image} alt="image" style={{ height: '50px', width: '50px' }} />
@@ -32,6 +36,9 @@ export default function Message({
         <button type="button" onClick={handleLike}>Like</button>
         <p>{likeCount}</p>
       </MessageInfo>
+      <MenuButton>
+        <button type="button" onClick={() => deleteThisMessage()}>⋮</button>
+      </MenuButton>
     </MessageContainer>
   );
 }
@@ -41,6 +48,7 @@ Message.propTypes = {
   image: PropTypes.string,
   name: PropTypes.string,
   time: PropTypes.string,
+  onUpdate: PropTypes.func.isRequired,
   likes: PropTypes.number,
   firebaseKey: PropTypes.string.isRequired,
 };
@@ -78,4 +86,12 @@ const MessageInfo = styled.div`
     margin-left: 4px;
     font-size: 10px;
   }
+`;
+
+const MenuButton = styled.div`
+  background-color: transparent;
+  border: none;
+  color: #666;
+  font-size: 24px;
+  cursor: pointer;
 `;
