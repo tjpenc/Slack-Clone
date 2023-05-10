@@ -37,11 +37,12 @@ export default function Chat({ searchTerm, channelData }) {
             key={message.firebaseKey}
             text={message.text}
             image={message.image}
-            name={message.username}
+            userName={message.username}
             time={message.time}
             likes={message.likes}
             firebaseKey={message.firebaseKey}
             onUpdate={updateMessages}
+            edited={message.edited}
           />
         ))}
       </ChatMessages>

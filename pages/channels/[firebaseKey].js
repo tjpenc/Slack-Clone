@@ -46,5 +46,5 @@ background-color: white;
 
 const ContentContainer = styled.div`
 display: flex;
-height: 100vh;
+height: auto;
 `;

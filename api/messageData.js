@@ -38,6 +38,12 @@ const updateMessageLikes = (messageObj, likes) => new Promise((resolve, reject) 
     .catch(reject);
 });
 
+const getSingleMessage = (firebaseKey) => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/messages/${firebaseKey}.json`)
+    .then((response) => resolve(response.data))
+    .catch(reject);
+});
+
 export {
-  createMessage, updateMessage, getMessages, updateMessageLikes, deleteMessage,
+  createMessage, updateMessage, getMessages, updateMessageLikes, deleteMessage, getSingleMessage,
 };
