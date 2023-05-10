@@ -26,6 +26,12 @@ export default function Message({
     deleteMessage(firebaseKey).then(() => onUpdate());
   };
 
+  const [showMenu, setShowMenu] = useState(false);
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
   return (
     <MessageContainer>
       <Card.Img variant="top" src={image} alt="image" style={{ height: '50px', width: '50px' }} />
@@ -37,9 +43,18 @@ export default function Message({
         <button type="button" onClick={handleLike}>Like</button>
         <p>{likeCount}</p>
       </MessageInfo>
-      <MenuButton>
-        <button type="button" onClick={() => deleteThisMessage()}>⋮</button>
-      </MenuButton>
+      <MenuButton onClick={toggleMenu}>⋮</MenuButton>
+      {showMenu ? console.warn('show') : console.warn('hidden')}
+      {showMenu ? (
+        <OptionsMenu>
+          <ul>
+            <OptionItem onClick={deleteThisMessage}>Delete</OptionItem>
+            <OptionItem>
+              Edit
+            </OptionItem>
+          </ul>
+        </OptionsMenu>
+      ) : ''}
     </MessageContainer>
   );
 }
@@ -89,10 +104,28 @@ const MessageInfo = styled.div`
   }
 `;
 
-const MenuButton = styled.div`
+const MenuButton = styled.button`
   background-color: transparent;
   border: none;
   color: #666;
   font-size: 24px;
   cursor: pointer;
+`;
+
+const OptionsMenu = styled.div`
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 3px;
+`;
+
+const OptionItem = styled.h6`
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  padding-right: 10px;
+  padding-bottom: 3px;
+
+  &:last-child {
+    border-bottom: none;
+  }
 `;
