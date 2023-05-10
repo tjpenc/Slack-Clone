@@ -25,4 +25,13 @@ const getMessages = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-export { createMessage, updateMessage, getMessages };
+const deleteMessage = (firebaseKey) => new Promise((resolve, reject) => {
+  axios.delete(`${dbUrl}/messages/${firebaseKey}.json`)
+    .then((response) => (response.data))
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
+export {
+  createMessage, updateMessage, getMessages, deleteMessage,
+};

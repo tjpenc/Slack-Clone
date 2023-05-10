@@ -1,10 +1,15 @@
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import Card from 'react-bootstrap/Card';
+import { deleteMessage } from '../api/messageData';
 
 export default function Message({
-  text, image, name, time,
+  firebaseKey, text, image, name, time, onUpdate,
 }) {
+  const deleteThisMessage = () => {
+    deleteMessage(firebaseKey).then(() => onUpdate());
+  };
+
   return (
     <MessageContainer>
       <Card.Img variant="top" src={image} alt="image" style={{ height: '50px', width: '50px' }} />
@@ -14,18 +19,24 @@ export default function Message({
         </h4>
         <p>{text}</p>
       </MessageInfo>
+      <MenuButton>
+        <button type="button" onClick={() => deleteThisMessage()}>⋮</button>
+      </MenuButton>
     </MessageContainer>
   );
 }
 
 Message.propTypes = {
+  firebaseKey: PropTypes.string,
   text: PropTypes.string,
   image: PropTypes.string,
   name: PropTypes.string,
   time: PropTypes.string,
+  onUpdate: PropTypes.func.isRequired,
 };
 
 Message.defaultProps = {
+  firebaseKey: '',
   text: 'This is default text',
   image: 'image',
   name: 'name',
@@ -57,4 +68,12 @@ const MessageInfo = styled.div`
     margin-left: 4px;
     font-size: 10px;
   }
+`;
+
+const MenuButton = styled.div`
+  background-color: transparent;
+  border: none;
+  color: #666;
+  font-size: 24px;
+  cursor: pointer;
 `;

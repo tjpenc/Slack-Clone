@@ -9,7 +9,7 @@ export default function LandingPage() {
         </HeaderLeft>
       </Header>
       <LandingPageContainer>
-        <h1>Please Select a Chatroom</h1>
+        <h1>Please Select a Channel</h1>
       </LandingPageContainer>
     </ChatContainer>
   );

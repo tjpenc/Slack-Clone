@@ -23,6 +23,7 @@ font-size: 12px;
 align-items: center;
 padding-left: 2px;
 cursor: pointer;
+flex-grow: 1;
 
   :hover {
     opacity: 0.9;

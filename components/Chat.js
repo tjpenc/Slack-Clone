@@ -17,6 +17,10 @@ export default function Chat({ searchTerm, channelData }) {
     return messageContent.includes(searchTerm.toLowerCase());
   }), [messages, searchTerm]);
 
+  const updateMessages = () => {
+    getMessagesByChannel(channelData.firebaseKey).then(setMessages);
+  };
+
   return (
     <ChatContainer>
       <Header>
@@ -31,10 +35,13 @@ export default function Chat({ searchTerm, channelData }) {
         {filteredMessages?.map((message) => (
           <Message
             key={message.firebaseKey}
+            firebaseKey={message.firebaseKey}
             text={message.text}
             image={message.image}
             name={message.username}
             time={message.time}
+            onUpdate={updateMessages}
+            channelKey={channelData.firebaseKey}
           />
         ))}
       </ChatMessages>
