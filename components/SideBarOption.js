@@ -44,6 +44,7 @@ align-items: center;
 padding-left: 2px;
 cursor: pointer;
 flex-grow: 1;
+
   :hover {
     opacity: 0.9;
     background-color: #340e36;
